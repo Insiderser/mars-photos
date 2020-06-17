@@ -4,6 +4,7 @@
     package="com.insiderser.mars">
 
     <application
+        android:name=".MarsImagesApp"
         android:allowBackup="false"
         android:autoRevokePermissions="allowed"
         android:icon="@mipmap/ic_launcher"
