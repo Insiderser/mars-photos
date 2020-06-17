@@ -29,9 +29,6 @@ jobs:
           echo y | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --sdk_root="$ANDROID_SDK_ROOT" \
               --install 'platforms;android-30' 'build-tools;30.0.0'
 
-      - name: Generate cache key
-        run: ./checksum.sh checksum.txt
-
       - name: Copy CI properties
         run: |
           mkdir -p ~/.gradle
