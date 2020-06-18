@@ -22,7 +22,6 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val item = getItem(position)
-        requireNotNull(item)
         holder.bind(item)
     }
 }
@@ -32,15 +31,16 @@ class HomeViewHolder(
     private val clickCallback: OnMarsImageClickCallback
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var currentItem: MarsImage
+    private var currentItem: MarsImage? = null
 
     init {
         binding.root.setOnClickListener { root ->
-            clickCallback.onClick(currentItem, root)
+            val item = currentItem ?: return@setOnClickListener
+            clickCallback.onClick(item, root)
         }
     }
 
-    fun bind(item: MarsImage) {
+    fun bind(item: MarsImage?) {
         currentItem = item
         binding.image.load(item)
     }
