@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
 
     @Suppress("UNREACHABLE_CODE")
     private fun openImageFullscreen(image: MarsImage, sharedView: View) {
+        return
         val navController = findNavController()
         val direction: NavDirections = TODO("not implemented")
         val extras = FragmentNavigatorExtras(
