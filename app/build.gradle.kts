@@ -86,6 +86,8 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
+    implementation("dev.chrisbanes:insetter-ktx:0.3.0")
+
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 
     testImplementation("junit:junit:4.13")

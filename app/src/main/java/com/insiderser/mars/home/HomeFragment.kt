@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.insiderser.mars.databinding.FragmentHomeBinding
 import com.insiderser.mars.model.MarsImage
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.setEdgeToEdgeSystemUiFlags
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -30,6 +31,8 @@ class HomeFragment : Fragment() {
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.setEdgeToEdgeSystemUiFlags()
+
         binding.recyclerView.adapter = adapter
 
         viewModel.images.observe(viewLifecycleOwner) { adapter.submitList(it) }
