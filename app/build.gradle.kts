@@ -34,6 +34,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
     }
     dependenciesInfo {
         includeInApk = false
@@ -75,7 +76,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
     implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
 
     val daggerVersion = "2.28-alpha"
     val androidxHiltVersion = "1.0.0-alpha01"

@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.insiderser.mars">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- NASA API returns HTTP URLs of images, not HTTPS,
+        so we have to enable cleartext traffic. -->
+
     <application
         android:name=".MarsImagesApp"
         android:allowBackup="false"
@@ -11,6 +16,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarsPhotos"
+        android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
 
         <activity android:name=".MainActivity">
