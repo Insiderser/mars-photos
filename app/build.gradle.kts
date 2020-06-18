@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -18,6 +20,8 @@ android {
         multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "NASA_API_KEY", '"' + getNasaApiKey() + '"')
     }
 
     buildFeatures {
@@ -92,4 +96,21 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.2.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+}
+
+fun getNasaApiKey(): String {
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+
+    localPropertiesFile.inputStream().use { inputStream ->
+        localProperties.load(inputStream)
+    }
+
+    return localProperties.getProperty("nasa_api_key") ?: throw IllegalStateException(
+        """
+        You must specify NASA API key.
+        You can specify "DEMO_KEY". However, it's limited to 30 calls per hour and 50 calls per day per IP.
+        To get API key: https://api.nasa.gov/
+        """.trimIndent()
+    )
 }
