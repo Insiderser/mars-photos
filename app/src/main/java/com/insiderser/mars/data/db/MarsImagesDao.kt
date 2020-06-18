@@ -9,7 +9,7 @@ import com.insiderser.mars.model.MarsImage
 @Dao
 interface MarsImagesDao {
 
-    @Query("SELECT * FROM mars_images")
+    @Query("SELECT * FROM mars_images ORDER BY sol ASC")
     fun getImages(): DataSource.Factory<Int, MarsImage>
 
     @Insert

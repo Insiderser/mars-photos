@@ -1,10 +1,13 @@
 package com.insiderser.mars.model
 
-inline class SolarDaysSinceLanding(val value: Int) {
+data class SolarDaysSinceLanding(val value: Int) {
 
     companion object {
 
+        @JvmField
         val LANDING = SolarDaysSinceLanding(0)
+
+        @JvmField
         val START = LANDING
     }
 }

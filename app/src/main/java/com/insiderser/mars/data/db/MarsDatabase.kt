@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.insiderser.mars.model.MarsImage
+import com.insiderser.mars.model.SolTypeConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +21,7 @@ import javax.inject.Singleton
     version = DATABASE_VERSION,
     exportSchema = false
 )
+@TypeConverters(SolTypeConverter::class)
 abstract class MarsDatabase : RoomDatabase() {
 
     abstract val imagesDao: MarsImagesDao

@@ -20,7 +20,7 @@ class DefaultRemoteMarsImagesDataSource @Inject constructor(
 
     override fun getImages(sol: SolarDaysSinceLanding): Single<List<MarsImage>> = service.getImages(sol.value)
         .map { (photos) ->  // Using Kotlin's destructuring.
-            photos.map { it.toMarsImage() }
+            photos.map { it.toMarsImage(sol) }
         }
 }
 
