@@ -5,7 +5,7 @@ data class SolarDaysSinceLanding(val value: Int) {
     companion object {
 
         @JvmField
-        val LANDING = SolarDaysSinceLanding(0)
+        val LANDING = SolarDaysSinceLanding(39)
 
         @JvmField
         val START = LANDING
