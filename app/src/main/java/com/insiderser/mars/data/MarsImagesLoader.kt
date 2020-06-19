@@ -9,6 +9,7 @@ import com.insiderser.mars.model.SolarDaysSinceLanding
 import com.insiderser.mars.model.plus
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +20,7 @@ class MarsImagesLoader @Inject constructor(
     private val preferencesStorage: AppPreferencesStorage
 ) : PagedList.BoundaryCallback<MarsImage>() {
 
-    private var isInProgress = false
+    private var isInProgress = AtomicBoolean(false)
 
     override fun onZeroItemsLoaded() {
         fetchNewImages()
@@ -31,8 +32,7 @@ class MarsImagesLoader @Inject constructor(
 
     @SuppressLint("CheckResult")
     private fun fetchNewImages() {
-        if (isInProgress) return
-        isInProgress = true
+        if (isInProgress.getAndSet(true)) return
 
         val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: SolarDaysSinceLanding.START
 
@@ -46,7 +46,7 @@ class MarsImagesLoader @Inject constructor(
 
                 imagesDao.insertAll(nextImages)
                 preferencesStorage.lastLoadedSolarDay = nextPage
-                isInProgress = false
+                isInProgress.set(false)
 
                 if (nextImages.isEmpty()) {
                     fetchNewImages()
@@ -54,7 +54,7 @@ class MarsImagesLoader @Inject constructor(
             }, { error ->
                 // TODO: display something to the user.
                 Timber.e(error)
-                isInProgress = false
+                isInProgress.set(false)
             })
     }
 }
