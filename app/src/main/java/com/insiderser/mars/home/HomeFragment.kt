@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.insiderser.mars.R
 import com.insiderser.mars.databinding.FragmentHomeBinding
 import com.insiderser.mars.model.MarsImage
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,9 +34,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.setEdgeToEdgeSystemUiFlags()
 
-        binding.recyclerView.adapter = adapter
+        setupRecyclerView()
 
         viewModel.images.observe(viewLifecycleOwner) { adapter.submitList(it) }
+    }
+
+    private fun setupRecyclerView() {
+        val spanCount = resources.getInteger(R.integer.home_list_span_count)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.setItemViewCacheSize(spanCount)
     }
 
     @Suppress("UNREACHABLE_CODE")
