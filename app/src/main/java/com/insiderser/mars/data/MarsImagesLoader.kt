@@ -38,6 +38,7 @@ class MarsImagesLoader @Inject constructor(
 
         if (!SolsConfig.canFetch(nextPage)) {
             Timber.d("Cannot fetch %s", nextPage)
+            isInProgress.set(false)
             return
         }
 
