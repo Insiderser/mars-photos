@@ -1,7 +1,7 @@
 package com.insiderser.mars.data.remote
 
 import com.insiderser.mars.model.MarsImage
-import com.insiderser.mars.model.SolarDaysSinceLanding
+import com.insiderser.mars.model.Sol
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 interface RemoteMarsImagesDataSource {
 
-    fun getImages(sol: SolarDaysSinceLanding): Single<List<MarsImage>>
+    fun getImages(sol: Sol): Single<List<MarsImage>>
 }
 
 class DefaultRemoteMarsImagesDataSource @Inject constructor(
     private val service: NasaImagesWebService,
 ) : RemoteMarsImagesDataSource {
 
-    override fun getImages(sol: SolarDaysSinceLanding): Single<List<MarsImage>> = service.getImages(sol.value)
+    override fun getImages(sol: Sol): Single<List<MarsImage>> = service.getImages(sol.value)
         .map { (photos) ->  // Using Kotlin's destructuring.
             photos.map { it.toMarsImage(sol) }
         }

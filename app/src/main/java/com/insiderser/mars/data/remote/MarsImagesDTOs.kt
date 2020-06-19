@@ -1,7 +1,7 @@
 package com.insiderser.mars.data.remote
 
 import com.insiderser.mars.model.MarsImage
-import com.insiderser.mars.model.SolarDaysSinceLanding
+import com.insiderser.mars.model.Sol
 
 data class NasaMarsImages(
     val photos: List<NasaMarsImage> = emptyList()
@@ -12,4 +12,4 @@ data class NasaMarsImage(
     val img_src: String,
 )
 
-fun NasaMarsImage.toMarsImage(sol: SolarDaysSinceLanding): MarsImage = MarsImage(id, url = img_src, sol)
+fun NasaMarsImage.toMarsImage(sol: Sol): MarsImage = MarsImage(id, url = img_src, sol)

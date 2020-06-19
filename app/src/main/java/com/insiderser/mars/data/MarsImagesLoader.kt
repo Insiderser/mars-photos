@@ -5,7 +5,7 @@ import androidx.paging.PagedList
 import com.insiderser.mars.data.db.MarsImagesDao
 import com.insiderser.mars.data.remote.RemoteMarsImagesDataSource
 import com.insiderser.mars.model.MarsImage
-import com.insiderser.mars.model.SolarDaysSinceLanding
+import com.insiderser.mars.model.Sol
 import com.insiderser.mars.model.plus
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -34,7 +34,7 @@ class MarsImagesLoader @Inject constructor(
     private fun fetchNewImages() {
         if (isInProgress.getAndSet(true)) return
 
-        val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: SolarDaysSinceLanding.START
+        val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: Sol.LANDING
 
         Timber.d("Trying to fetch for solar day %s", nextPage)
 

@@ -8,16 +8,16 @@ import androidx.room.TypeConverter
 data class MarsImage(
     @PrimaryKey val id: Int,
     val url: String,
-    val sol: SolarDaysSinceLanding,
+    val sol: Sol,
 )
 
 object SolTypeConverter {
 
     @TypeConverter
     @JvmStatic
-    fun fromSol(sol: SolarDaysSinceLanding?): Int? = sol?.value
+    fun fromSol(sol: Sol?): Int? = sol?.value
 
     @TypeConverter
     @JvmStatic
-    fun toSol(value: Int?): SolarDaysSinceLanding? = value?.let { SolarDaysSinceLanding(it) }
+    fun toSol(value: Int?): Sol? = value?.let { Sol(it) }
 }

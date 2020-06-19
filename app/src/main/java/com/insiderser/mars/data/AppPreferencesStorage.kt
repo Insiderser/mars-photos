@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.insiderser.mars.model.SolarDaysSinceLanding
+import com.insiderser.mars.model.Sol
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 interface AppPreferencesStorage {
 
-    var lastLoadedSolarDay: SolarDaysSinceLanding?
+    var lastLoadedSolarDay: Sol?
 }
 
 class DefaultAppPreferencesStorage @Inject constructor(
@@ -26,11 +26,11 @@ class DefaultAppPreferencesStorage @Inject constructor(
         context.getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
     }
 
-    override var lastLoadedSolarDay: SolarDaysSinceLanding?
+    override var lastLoadedSolarDay: Sol?
         get() =
             if (sharedPreferences.contains(PREFERENCE_LAST_LOADED_PAGE)) {
                 val value = sharedPreferences.getInt(PREFERENCE_LAST_LOADED_PAGE, -1)
-                SolarDaysSinceLanding(value)
+                Sol(value)
             } else null
         set(value) {
             sharedPreferences.edit {
