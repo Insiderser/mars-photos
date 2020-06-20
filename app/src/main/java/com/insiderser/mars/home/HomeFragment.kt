@@ -35,8 +35,6 @@ class HomeFragment : Fragment() {
         view.setEdgeToEdgeSystemUiFlags()
 
         setupRecyclerView()
-
-        viewModel.images.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
 
     private fun setupRecyclerView() {
@@ -44,6 +42,8 @@ class HomeFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.setItemViewCacheSize(spanCount)
+
+        viewModel.images.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
 
     @Suppress("UNREACHABLE_CODE")
