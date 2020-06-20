@@ -2,13 +2,12 @@ package com.insiderser.mars.imageviewer
 
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.navArgs
 import com.insiderser.mars.databinding.ActivityImageViewerBinding
 import com.squareup.picasso.Picasso
 
-class ImageViewerActivity : AppCompatActivity() {
+class ImageViewerActivity : LeanBackActivity() {
 
     private lateinit var binding: ActivityImageViewerBinding
 
