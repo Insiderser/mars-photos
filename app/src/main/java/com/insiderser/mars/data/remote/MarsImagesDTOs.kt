@@ -10,6 +10,7 @@ data class NasaMarsImages(
 data class NasaMarsImage(
     val id: Int,
     val img_src: String,
+    val sol: Int,
 )
 
-fun NasaMarsImage.toMarsImage(sol: Sol): MarsImage = MarsImage(id, url = img_src, sol)
+fun NasaMarsImage.toMarsImage(): MarsImage = MarsImage(id, url = img_src, Sol(sol))
