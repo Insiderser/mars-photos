@@ -2,13 +2,15 @@ package com.insiderser.mars.home
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.doOnPreDraw
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.insiderser.mars.databinding.ListItemImageBinding
 import com.insiderser.mars.model.MarsImage
 import com.insiderser.mars.utils.layoutInflater
-import com.insiderser.mars.utils.load
+import com.squareup.picasso.Picasso
 
 class HomeAdapter(
     private val clickCallback: OnMarsImageClickCallback
@@ -42,8 +44,25 @@ class HomeViewHolder(
 
     fun bind(item: MarsImage?) {
         currentItem = item
-        binding.image.load(item)
+        binding.image.load(item?.url)
     }
+}
+
+private fun ImageView.load(url: String?) {
+    val wasViewMeasured = width != 0 || height != 0
+    if (!wasViewMeasured) {
+        doOnPreDraw {
+            load(url)
+        }
+        return
+    }
+
+    Picasso.get()
+        .load(url)
+        .placeholder(android.R.drawable.progress_horizontal)
+        .resize(width, height)
+        .centerCrop()
+        .into(this)
 }
 
 fun interface OnMarsImageClickCallback {

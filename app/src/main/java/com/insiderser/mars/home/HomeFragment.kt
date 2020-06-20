@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.insiderser.mars.MainNavDirections
 import com.insiderser.mars.R
 import com.insiderser.mars.databinding.FragmentHomeBinding
 import com.insiderser.mars.model.MarsImage
@@ -48,13 +48,9 @@ class HomeFragment : Fragment() {
 
     @Suppress("UNREACHABLE_CODE")
     private fun openImageFullscreen(image: MarsImage, sharedView: View) {
-        return
         val navController = findNavController()
-        val direction: NavDirections = TODO("not implemented")
-        val extras = FragmentNavigatorExtras(
-            sharedView to "image" // TODO
-        )
+        val direction: NavDirections = MainNavDirections.viewImageFullscreen(image.url)
 
-        navController.navigate(direction, extras)
+        navController.navigate(direction)
     }
 }
