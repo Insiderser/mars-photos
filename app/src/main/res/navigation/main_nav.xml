@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.insiderser.mars.home.HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/view_image_fullscreen"
+            app:destination="@id/imageViewerActivity" />
+    </fragment>
 
-    <fragment
-        android:id="@+id/imageViewerFragment"
-        android:name="com.insiderser.mars.imageviewer.ImageViewerFragment"
-        tools:layout="@layout/fragment_image_viewer">
+    <activity
+        android:id="@+id/imageViewerActivity"
+        android:name="com.insiderser.mars.imageviewer.ImageViewerActivity"
+        tools:layout="@layout/activity_image_viewer">
         <argument
             android:name="imageUrl"
             app:argType="string" />
-    </fragment>
-
-    <action
-        android:id="@+id/view_image_fullscreen"
-        app:destination="@id/imageViewerFragment" />
+    </activity>
 </navigation>
