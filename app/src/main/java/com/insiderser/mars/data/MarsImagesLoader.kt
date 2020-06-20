@@ -3,10 +3,11 @@ package com.insiderser.mars.data
 import android.annotation.SuppressLint
 import androidx.paging.PagedList
 import com.insiderser.mars.data.db.MarsImagesDao
+import com.insiderser.mars.data.remote.NasaRemoteConfig
 import com.insiderser.mars.data.remote.RemoteMarsImagesDataSource
 import com.insiderser.mars.model.MarsImage
+import com.insiderser.mars.model.Sol
 import com.insiderser.mars.model.plus
-import com.insiderser.mars.utils.SolsConfig
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
@@ -34,9 +35,9 @@ class MarsImagesLoader @Inject constructor(
     private fun fetchNewImages() {
         if (isInProgress.getAndSet(true)) return
 
-        val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: SolsConfig.landing
+        val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: Sol.landing
 
-        if (!SolsConfig.canFetch(nextPage)) {
+        if (!NasaRemoteConfig.canFetch(nextPage)) {
             Timber.d("Cannot fetch %s", nextPage)
             isInProgress.set(false)
             return
