@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -29,7 +28,7 @@ object NasaImagesWebServiceModule {
     @Provides
     fun provideNasaMarsImagesWebService(): NasaImagesWebService {
         val moshiConverterFactory = MoshiConverterFactory.create()
-        val rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
+        val rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
 
         val client = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)

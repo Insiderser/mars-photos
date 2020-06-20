@@ -8,7 +8,8 @@ import com.insiderser.mars.data.remote.RemoteMarsImagesDataSource
 import com.insiderser.mars.model.MarsImage
 import com.insiderser.mars.model.Sol
 import com.insiderser.mars.model.plus
-import io.reactivex.schedulers.Schedulers
+import com.insiderser.mars.utils.IO
+import io.reactivex.Scheduler
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -18,7 +19,8 @@ import javax.inject.Singleton
 class MarsImagesLoader @Inject constructor(
     private val remoteDataSource: RemoteMarsImagesDataSource,
     private val imagesDao: MarsImagesDao,
-    private val preferencesStorage: AppPreferencesStorage
+    private val preferencesStorage: AppPreferencesStorage,
+    @IO private val ioScheduler: Scheduler,
 ) : PagedList.BoundaryCallback<MarsImage>() {
 
     private var isInProgress = AtomicBoolean(false)
@@ -46,8 +48,8 @@ class MarsImagesLoader @Inject constructor(
         Timber.d("Trying to fetch %s", nextPage)
 
         remoteDataSource.getImages(nextPage)
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
+            .subscribeOn(ioScheduler)
+            .observeOn(ioScheduler)
             .subscribe({ nextImages ->
                 Timber.d("Fetched successfully. Received %d images", nextImages.size)
 
