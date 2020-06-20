@@ -4,7 +4,7 @@ import com.insiderser.mars.model.MarsImage
 import com.insiderser.mars.model.Sol
 
 data class NasaMarsImages(
-    val photos: List<NasaMarsImage> = emptyList()
+    val photos: List<NasaMarsImage>
 )
 
 data class NasaMarsImage(
