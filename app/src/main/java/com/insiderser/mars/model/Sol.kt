@@ -26,10 +26,14 @@ data class Sol(val value: Int) {
             get() {
                 val utc = ZoneId.of("UTC")
                 val nowOnEarth = LocalDate.now(utc)
-                val earthDaysSinceLaunch = daysBetween(curiosityLandingEarthDate, nowOnEarth)
-                val solsSinceLaunch = earthDaysSinceLaunch / 1.02749125
-                return Sol(solsSinceLaunch.toInt())
+                return ofDate(nowOnEarth)
             }
+
+        fun ofDate(date: LocalDate): Sol {
+            val earthDaysSinceLaunch = daysBetween(curiosityLandingEarthDate, date)
+            val solsSinceLaunch = earthDaysSinceLaunch / 1.02749125
+            return Sol(solsSinceLaunch.toInt())
+        }
     }
 }
 

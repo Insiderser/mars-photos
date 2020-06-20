@@ -48,6 +48,12 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("junit:junit:4.13")
+    }
+}
+
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.5")
 
@@ -100,13 +106,8 @@ dependencies {
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 
     testImplementation("junit:junit:4.13")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-
-    androidTestImplementation("androidx.test:core:1.2.0")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test:rules:1.2.0")
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    testImplementation("org.amshove.kluent:kluent-android:1.61")
+    testImplementation("io.mockk:mockk:1.10.0")
 }
 
 fun getNasaApiKey(): String {
@@ -120,7 +121,7 @@ fun getNasaApiKey(): String {
     return localProperties.getProperty("nasa_api_key") ?: throw IllegalStateException(
         """
         You must specify NASA API key.
-        You can specify "DEMO_KEY". However, it's limited to 30 calls per hour and 50 calls per day per IP.
+        You can set it to "DEMO_KEY". However, it's limited to 30 calls per hour and 50 calls per day per IP.
         To get API key: https://api.nasa.gov/
         """.trimIndent()
     )
