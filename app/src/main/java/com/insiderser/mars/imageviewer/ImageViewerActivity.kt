@@ -1,11 +1,13 @@
 package com.insiderser.mars.imageviewer
 
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.core.view.doOnPreDraw
 import androidx.navigation.navArgs
+import com.google.android.material.snackbar.Snackbar
+import com.insiderser.mars.R
 import com.insiderser.mars.databinding.ActivityImageViewerBinding
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 class ImageViewerActivity : LeanBackActivity() {
 
@@ -19,23 +21,36 @@ class ImageViewerActivity : LeanBackActivity() {
         binding = ActivityImageViewerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val url: String = args.imageUrl
-        binding.image.load(url)
-    }
-}
+        supportPostponeEnterTransition()
 
-private fun ImageView.load(url: String?) {
-    val wasViewMeasured = width != 0 || height != 0
-    if (!wasViewMeasured) {
-        doOnPreDraw {
-            load(url)
+        loadImage()
+    }
+
+    private fun loadImage(): Unit = with(binding.image) {
+        val url = args.imageUrl
+
+        val callback = object : Callback {
+
+            override fun onSuccess() {
+                supportStartPostponedEnterTransition()
+            }
+
+            override fun onError(e: Exception?) {
+                supportStartPostponedEnterTransition()
+
+                Timber.e(e, "Cannot load image $url")
+
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.image_loading_error),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
         }
-        return
-    }
 
-    Picasso.get()
-        .load(url)
-        .resize(width, height)
-        .centerInside()
-        .into(this)
+        Picasso.get()
+            .load(url)
+            .noFade()
+            .into(this, callback)
+    }
 }

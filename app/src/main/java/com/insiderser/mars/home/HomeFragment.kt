@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.insiderser.mars.R
@@ -50,6 +52,14 @@ class HomeFragment : Fragment() {
         val navController = findNavController()
         val direction: NavDirections = HomeFragmentDirections.viewImageFullscreen(image.url)
 
-        navController.navigate(direction)
+        val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(), sharedView, getString(R.string.image_viewer_image_transition_name)
+        )
+
+        val extra = ActivityNavigator.Extras.Builder()
+            .setActivityOptions(activityOptions)
+            .build()
+
+        navController.navigate(direction, extra)
     }
 }

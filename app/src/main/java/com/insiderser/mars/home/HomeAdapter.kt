@@ -1,9 +1,8 @@
 package com.insiderser.mars.home
 
-import android.view.View
+import android.os.Build
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.doOnPreDraw
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,37 +35,31 @@ class HomeViewHolder(
     private var currentItem: MarsImage? = null
 
     init {
-        binding.root.setOnClickListener { root ->
+        binding.root.setOnClickListener {
             val item = currentItem ?: return@setOnClickListener
-            clickCallback.onClick(item, root)
+            clickCallback.onClick(item, binding.image)
         }
     }
 
     fun bind(item: MarsImage?) {
         currentItem = item
         binding.image.load(item?.url)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            binding.image.transitionName = "image_${item?.url}"
+        }
     }
 }
 
 private fun ImageView.load(url: String?) {
-    val wasViewMeasured = width != 0 || height != 0
-    if (!wasViewMeasured) {
-        doOnPreDraw {
-            load(url)
-        }
-        return
-    }
-
     Picasso.get()
         .load(url)
         .placeholder(android.R.drawable.progress_horizontal)
-        .resize(width, height)
-        .centerCrop()
         .into(this)
 }
 
 fun interface OnMarsImageClickCallback {
-    fun onClick(item: MarsImage, itemView: View)
+    fun onClick(item: MarsImage, imageView: ImageView)
 }
 
 object MarsImageDiffCallback : DiffUtil.ItemCallback<MarsImage>() {

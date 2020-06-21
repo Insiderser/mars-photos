@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Mars Photos</string>
+
+    <string name="image_loading_error">Cannot load the image. Are you connected to the internet?</string>
+
+    <string name="image_viewer_image_transition_name">image_destination</string>
 </resources>
