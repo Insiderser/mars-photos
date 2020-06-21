@@ -37,7 +37,7 @@ class MarsImagesLoader @Inject constructor(
     private fun fetchNewImages() {
         if (isInProgress.getAndSet(true)) return
 
-        val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: Sol.landing
+        val nextPage = preferencesStorage.lastLoadedSolarDay?.plus(1) ?: Sol.LANDING
 
         if (!NasaRemoteConfig.canFetch(nextPage)) {
             Timber.d("Cannot fetch %s", nextPage)

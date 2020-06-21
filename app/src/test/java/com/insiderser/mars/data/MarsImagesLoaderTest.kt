@@ -41,34 +41,34 @@ class MarsImagesLoaderTest {
     @Test
     fun `When nothing loaded onZeroItemsLoaded should load landing sol`() {
         preferences.lastLoadedSolarDay = null
-        every { remoteDataSource.getImages(Sol.landing) } returns Single.just(FakeImagesProvider.list)
+        every { remoteDataSource.getImages(Sol.LANDING) } returns Single.just(FakeImagesProvider.list)
 
         loader.onZeroItemsLoaded()
 
-        preferences.lastLoadedSolarDay shouldBeEqualTo Sol.landing
+        preferences.lastLoadedSolarDay shouldBeEqualTo Sol.LANDING
         verify { dao.insertAll(FakeImagesProvider.list) }
         confirmVerified(dao)
     }
 
     @Test
     fun `If loaded previously onItemAtEndLoaded should load next sol`() {
-        preferences.lastLoadedSolarDay = Sol.landing
-        every { remoteDataSource.getImages(Sol.landing.plus(1)) } returns Single.just(FakeImagesProvider.list)
+        preferences.lastLoadedSolarDay = Sol.LANDING
+        every { remoteDataSource.getImages(Sol.LANDING.plus(1)) } returns Single.just(FakeImagesProvider.list)
 
         loader.onItemAtEndLoaded(mockk())
 
-        preferences.lastLoadedSolarDay shouldBeEqualTo Sol.landing.plus(1)
+        preferences.lastLoadedSolarDay shouldBeEqualTo Sol.LANDING.plus(1)
         verify { dao.insertAll(FakeImagesProvider.list) }
         confirmVerified(dao)
     }
 
     @Test
     fun `If cannot fetch next item onItemAtEndLoaded should not load next sol`() {
-        preferences.lastLoadedSolarDay = Sol.now
+        preferences.lastLoadedSolarDay = Sol.now()
 
         loader.onItemAtEndLoaded(mockk())
 
-        preferences.lastLoadedSolarDay shouldBeEqualTo Sol.now
+        preferences.lastLoadedSolarDay shouldBeEqualTo Sol.now()
         verify(exactly = 0) { remoteDataSource.getImages(any()) }
         verify(exactly = 0) { dao.insertAll(any()) }
     }
@@ -80,11 +80,11 @@ class MarsImagesLoaderTest {
 
     @Test
     fun `If loaded previously and remote returns error MarsImagesLoader should handle error`() {
-        checkCanHandleErrors(Sol.landing)
+        checkCanHandleErrors(Sol.LANDING)
     }
 
     private fun checkCanHandleErrors(sol: Sol?) {
-        val nextSol = sol?.plus(1) ?: Sol.landing
+        val nextSol = sol?.plus(1) ?: Sol.LANDING
         val error = IOException("Internet not available")
         every { remoteDataSource.getImages(nextSol) } returns Single.error(error)
         preferences.lastLoadedSolarDay = sol

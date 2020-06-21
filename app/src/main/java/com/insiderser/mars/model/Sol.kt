@@ -18,19 +18,18 @@ data class Sol(val value: Int) {
 
     companion object {
 
-        val landing = Sol(39)
+        val LANDING = Sol(39)
 
-        private val curiosityLandingEarthDate = LocalDate.of(2012, Month.AUGUST, 6)
+        private val LANDING_EARTH_DATE = LocalDate.of(2012, Month.AUGUST, 6)
 
-        val now: Sol
-            get() {
-                val utc = ZoneId.of("UTC")
-                val nowOnEarth = LocalDate.now(utc)
-                return ofDate(nowOnEarth)
-            }
+        fun now(): Sol {
+            val utc = ZoneId.of("UTC")
+            val nowOnEarth = LocalDate.now(utc)
+            return ofDate(nowOnEarth)
+        }
 
         fun ofDate(date: LocalDate): Sol {
-            val earthDaysSinceLaunch = daysBetween(curiosityLandingEarthDate, date)
+            val earthDaysSinceLaunch = daysBetween(LANDING_EARTH_DATE, date)
             val solsSinceLaunch = earthDaysSinceLaunch / 1.02749125
             return Sol(solsSinceLaunch.toInt())
         }
@@ -44,4 +43,4 @@ operator fun Sol.plus(days: Int): Sol {
 fun Sol.isBefore(other: Sol): Boolean =
     this.value < other.value
 
-fun Sol.hasPassed(): Boolean = this.isBefore(Sol.now)
+fun Sol.hasPassed(): Boolean = this.isBefore(Sol.now())

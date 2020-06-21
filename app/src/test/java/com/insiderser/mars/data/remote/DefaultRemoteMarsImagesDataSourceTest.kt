@@ -14,7 +14,7 @@ class DefaultRemoteMarsImagesDataSourceTest {
 
     @Test
     fun `getImages correctly handles list`() {
-        val sol = Sol.landing
+        val sol = Sol.LANDING
 
         val images = listOf(
             NasaMarsImage(4, "image url", sol.value),
@@ -36,7 +36,7 @@ class DefaultRemoteMarsImagesDataSourceTest {
     fun `getImages correctly handles errors`() {
         webService.images = Single.error(IOException("My exception"))
 
-        dataSource.getImages(Sol.landing)
+        dataSource.getImages(Sol.LANDING)
             .test()
             .assertFailure(IOException::class.java)
     }
@@ -45,7 +45,7 @@ class DefaultRemoteMarsImagesDataSourceTest {
     fun `getImages correctly handles empty list`() {
         webService.images = Single.just(NasaMarsImages(emptyList()))
 
-        dataSource.getImages(Sol.landing)
+        dataSource.getImages(Sol.LANDING)
             .test()
             .assertResult(emptyList())
     }

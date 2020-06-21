@@ -33,8 +33,8 @@ class SolTest {
 
     @Test
     fun `isBefore is correct`() {
-        Sol.landing.isBefore(Sol.landing.plus(1)) shouldBeEqualTo true
-        Sol.landing.isBefore(Sol.landing) shouldBeEqualTo false
+        Sol.LANDING.isBefore(Sol.LANDING.plus(1)) shouldBeEqualTo true
+        Sol.LANDING.isBefore(Sol.LANDING) shouldBeEqualTo false
         Sol(2000).isBefore(Sol(Int.MAX_VALUE)) shouldBeEqualTo true
         Sol(Int.MAX_VALUE).isBefore(Sol(2000)) shouldBeEqualTo false
         Sol(Int.MAX_VALUE).isBefore(Sol(Int.MAX_VALUE)) shouldBeEqualTo false
@@ -42,10 +42,10 @@ class SolTest {
 
     @Test
     fun `hasPassed is correct`() {
-        Sol.landing.hasPassed() shouldBeEqualTo true
+        Sol.LANDING.hasPassed() shouldBeEqualTo true
         Sol(Int.MAX_VALUE).hasPassed() shouldBeEqualTo false
-        Sol.now.hasPassed() shouldBeEqualTo false
-        Sol.now.plus(-1).hasPassed() shouldBeEqualTo true
+        Sol.now().hasPassed() shouldBeEqualTo false
+        Sol.now().plus(-1).hasPassed() shouldBeEqualTo true
     }
 
     @Test
