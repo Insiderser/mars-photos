@@ -1,7 +1,6 @@
 package com.insiderser.mars.imageviewer
 
 import android.os.Bundle
-import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.insiderser.mars.R
 import com.insiderser.mars.databinding.ActivityImageViewerBinding
@@ -13,8 +12,6 @@ class ImageViewerActivity : LeanBackActivity() {
 
     private lateinit var binding: ActivityImageViewerBinding
 
-    private val args: ImageViewerActivityArgs by navArgs()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,12 +20,12 @@ class ImageViewerActivity : LeanBackActivity() {
 
         supportPostponeEnterTransition()
 
-        loadImage()
+        val url = intent.getStringExtra(EXTRA_URL)
+        requireNotNull(url) { "You must pass URL as an intent extra." }
+        loadImage(url)
     }
 
-    private fun loadImage(): Unit = with(binding.image) {
-        val url = args.imageUrl
-
+    private fun loadImage(url: String): Unit = with(binding.image) {
         val callback = object : Callback {
 
             override fun onSuccess() {
@@ -52,5 +49,9 @@ class ImageViewerActivity : LeanBackActivity() {
             .load(url)
             .noFade()
             .into(this, callback)
+    }
+
+    companion object {
+        const val EXTRA_URL = "image-url"
     }
 }
