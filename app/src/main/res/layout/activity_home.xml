@@ -10,4 +10,4 @@
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
     app:spanCount="@integer/home_list_span_count"
     tools:context=".home.HomeActivity"
-    tools:listitem="@layout/list_item_image" />
+    tools:listitem="@layout/item_image" />
