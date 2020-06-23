@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.insiderser.mars.databinding.ListItemImageBinding
+import com.insiderser.mars.databinding.ItemImageBinding
 import com.insiderser.mars.model.MarsImage
 import com.insiderser.mars.utils.layoutInflater
 import com.squareup.picasso.Picasso
@@ -17,7 +17,7 @@ class HomeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val inflater = parent.layoutInflater
-        val binding = ListItemImageBinding.inflate(inflater, parent, false)
+        val binding = ItemImageBinding.inflate(inflater, parent, false)
         return HomeViewHolder(binding, clickCallback)
     }
 
@@ -28,7 +28,7 @@ class HomeAdapter(
 }
 
 class HomeViewHolder(
-    private val binding: ListItemImageBinding,
+    private val binding: ItemImageBinding,
     private val clickCallback: OnMarsImageClickCallback
 ) : RecyclerView.ViewHolder(binding.root) {
 
