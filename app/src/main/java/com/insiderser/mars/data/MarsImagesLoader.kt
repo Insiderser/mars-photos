@@ -49,7 +49,6 @@ class MarsImagesLoader @Inject constructor(
 
         remoteDataSource.getImages(nextPage)
             .subscribeOn(ioScheduler)
-            .observeOn(ioScheduler)
             .subscribe({ nextImages ->
                 Timber.d("Fetched successfully. Received %d images", nextImages.size)
 
